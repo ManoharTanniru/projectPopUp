@@ -1,0 +1,153 @@
+<template>
+
+    <lightning-card title="Project">
+
+        <lightning-button variant="brand" label="New Project" title="Open Modal" onclick={customShowModalPopup}
+            class="slds-m-left_x-small"></lightning-button>
+
+
+        <template if:true={customFormModal}>
+
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+                aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+
+                    <header class="slds-modal__header" style="background-color:rgb(81, 189, 240)">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse"
+                            title="Close" onclick={customHideModalPopup}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"
+                                size="small"></lightning-icon>
+                            <!-- <span class="slds-assistive-text">Close</span> -->
+                        </button>
+
+                        <h2 class="slds-text-heading_medium slds-hyphenate">New Project</h2>
+
+                    </header>
+                    <div class="slds-scrollable"></div>
+
+
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <h3 class="slds-text-heading_small slds-hyphenate" style="color:grey"><b>INFORMATION</b>
+                        </h3>
+                        <br>
+                        <!-- <div class="slds-modal__content slds-p-around_medium">
+                        <h5 class="slds-text-heading_medium slds-hyphenate" style="color:#333;">Information</h5> -->
+
+                        <lightning-record-edit-form object-api-name="Project__c" onsuccess={handleButtonClickOnSave}>
+                            <div class="slds-grid slds-wrap">
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>Project Name</label>
+                                    <abbr title="required" class="slds-required"><b>*</b></abbr>
+                                    <lightning-input-field field-name="Name" label="Project Name" required="" 
+                                        variant="label-hidden" aria-required="true" maxlength="80">
+                                    </lightning-input-field>
+                                </div>
+                                <!--variant="label-hidden", why aria-required="true", why maxlength=? -->
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>Project Type</label>
+                                    <lightning-input-field field-name="Project_Type__c" label="Project Type" 
+                                        variant="label-hidden" maxlength="80"></lightning-input-field>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>Start Date</label>
+                                    <abbr title="required" class="slds-required"><b>*</b></abbr>
+                                    <lightning-input-field field-name="Start_Date__c" label="Start Date" required=""
+                                        variant="label-hidden" placeholder="Select Date" maxlength="80">
+                                    </lightning-input-field>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>End Date</label>
+                                    <abbr title="required" class="slds-required"><b>*</b></abbr>
+                                    <lightning-input-field field-name="End_Date__c" label="End Date" required=""
+                                        variant="label-hidden" placeholder="Select Date" maxlength="80">
+                                    </lightning-input-field>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12  slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>Priority</label>
+                                    <abbr title="required" class="slds-required"><b>*</b></abbr>
+                                    <lightning-input-field field-name="Priority__c" label="Priority" required="" 
+                                        variant="label-hidden" placeholder="Select Priority" maxlength="80">
+                                    </lightning-input-field>
+                                </div>
+
+                                <div class="slds-col slds-size_6-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>Estimated Cost</label>
+                                    <lightning-input-field field-name="Estimated_Cost__c" label="Estimated Cost"
+                                        variant="label-hidden" maxlength="80"></lightning-input-field>
+                                </div>
+
+                                <div class="slds-col slds-size_12-of-12 slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label>Add Members</label>
+                                    <lightning-input-field field-name="Add_Members__c" label="Add Members"
+                                        placeholder="Search Users" variant="label-hidden" maxlength="80">
+                                    </lightning-input-field>
+                                </div>
+                            </div>
+
+                                <!-- <div class="slds-m-around_medium">
+                                    <label>Upload File</label>
+                                    <lightning-input type="file" accept=".xlsx, .xls, .csv, .png, .doc, .docx, .pdf"
+                                        onchange={openfileUpload}></lightning-input>
+                                </div>
+                                <template if:true={fileData}>
+                                    <p>{fileData.filename}</p>
+                                </template> -->
+
+                                <div class="slds-m-around_medium">
+                                    <label>Upload File</label>
+                                    <lightning-file-upload
+                                            label="Attach receipt"
+                                            name="fileUploader"
+                                            accept={acceptedFormats}
+                                            record-id={myRecordId}
+                                            onuploadfinished={handleUploadFinished}
+                                            multiple>
+                                    </lightning-file-upload>
+                                </div>
+                                    
+                               
+
+
+
+
+
+
+
+
+                                <div class="slds-col slds-p-horizontal--medium slds-m-bottom_medium">
+                                    <label style="color:hsl(213, 6%, 38%)"> DESCRIPTION</label>
+                                    <abbr title="required" class="slds-required"><b>*</b></abbr>
+                                    <lightning-input-field class="Desc" field-name="Description__c" label="Description"
+                                        required="" variant="label-hidden"></lightning-input-field>
+                                </div>
+                           
+                        </lightning-record-edit-form>
+
+
+                        
+
+
+                        <!-- <lightning-record-edit-form object-api-name="Project__c">
+                            
+                        </lightning-record-edit-form> -->
+                    </div>
+
+                    <footer class="slds-modal__footer" style="text-align: center">
+                        <!--style="display: flex; justify-content:center"     slds-align_absolute-center  slds-clearfix   slds-modal__footer          style="text-align: center;-->
+                        <lightning-button label="Cancel" onclick={customHideModalPopup} variant="brand" style="margin-right: 8px;"></lightning-button>
+                        <!-- <button class="slds-button slds-button_brand" onclick={customHideModalPopup}>Cancel</button> -->
+                        <button class="slds-button slds-button_brand" onclick={saveRecord}>Save</button>
+                        <button class="slds-button slds-button_brand" onclick={saveRecordAndNew}>Save & New</button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+
+    </lightning-card>
+</template>
